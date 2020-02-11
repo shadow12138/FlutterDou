@@ -102,17 +102,7 @@ class TvRecommendState extends State<TvRecommendWidget> {
     );
   }
 
-  Widget _getRight(){
-    return Container(
-      margin: EdgeInsets.only(left: 20, right: 10),
-      child: Column(
-        children: <Widget>[
-          Image.asset('assets/ic_info_wish.png', width: 20, height: 20,),
-          Text('想看', style: TextStyle(color: ImageUtils.fromHex('#E2B365'), fontSize: 10, fontWeight: FontWeight.bold),)
-        ],
-      ),
-    );
-  }
+
 
   Widget _getDetail(TvBean bean) {
     return Container(
@@ -120,12 +110,7 @@ class TvRecommendState extends State<TvRecommendWidget> {
       alignment: Alignment.topLeft,
       child: Column(
         children: <Widget>[
-          Row(
-            children: <Widget>[
-              Expanded(child: _getLeft(bean),),
-              _getRight()
-            ],
-          ),
+          _getLeft(bean),
           Container(
             margin: EdgeInsets.only(top: 30),
             child: Row(
@@ -135,7 +120,7 @@ class TvRecommendState extends State<TvRecommendWidget> {
                     height: 40,
                     padding: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
                     decoration: BoxDecoration(
-                        color: ImageUtils.fromHex('#eeeeee'),
+                        color: ImageUtils.fromHex('#F7F7F7'),
                         borderRadius: BorderRadius.all(Radius.circular(4))),
                     child: Text(
                       '你可能感兴趣',

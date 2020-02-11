@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app/pages/book/book_list_widget.dart';
 import 'package:flutter_app/pages/book/book_rank_widget.dart';
+import 'package:flutter_app/pages/book/book_recommend_widget.dart';
 import 'package:flutter_app/pages/book/new_book_widget.dart';
 import 'package:flutter_app/pages/book/today_recommend_widget.dart';
 import 'package:flutter_app/utils/image_utils.dart';
@@ -18,7 +19,8 @@ class BookPage extends StatelessWidget {
             NewBookWidget(),
             BookRankWidget(),
             BookListWidget(),
-            TodayRecommendWidget()
+            TodayRecommendWidget(),
+            BookRecommendWidget(),
           ],
         ),
       ),

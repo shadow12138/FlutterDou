@@ -11,7 +11,7 @@ import 'package:flutter_app/utils/size_utils.dart';
 import 'package:provider/provider.dart';
 
 class PageNotifier with ChangeNotifier {
-  int page = 3;
+  int page = 2;
 
   void setPage(int page) {
     this.page = page;

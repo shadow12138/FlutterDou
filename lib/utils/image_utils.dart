@@ -53,4 +53,9 @@ class ImageUtils {
       ),
     );
   }
+
+  static Color getTextColor1() => fromHex('#333333');
+  static Color getTextColor2() => fromHex('#666666');
+  static Color getTextColor3() => fromHex('#999999');
+  static Color getDividerColor() => fromHex('#E3E3E3');
 }

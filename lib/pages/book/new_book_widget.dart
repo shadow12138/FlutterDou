@@ -96,7 +96,7 @@ class NewBookState extends State<NewBookWidget> {
                           padding: EdgeInsets.symmetric(
                               vertical: 10, horizontal: 10),
                           decoration: BoxDecoration(
-                              color: ImageUtils.fromHex('#eeeeee'),
+                              color: ImageUtils.fromHex('#F7F7F7'),
                               borderRadius:
                                   BorderRadius.all(Radius.circular(4))),
                           child: Text(

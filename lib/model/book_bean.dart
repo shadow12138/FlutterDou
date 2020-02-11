@@ -5,25 +5,21 @@ class BookBean {
   String image;
   String author;
   String country;
+  String desc;
+  String tag;
   double rating;
 
   static BookBean getItem(Map<String, dynamic> subject) {
-    String name = subject['name'];
-    String comment = subject['comment'];
-    String image = subject['image'];
-    String author = subject['author'];
-    String country = subject['country'];
-    int collectCount = subject['collect_count'];
-    double rating = subject['rating'];
-
     BookBean bean = BookBean();
-    bean.name = name;
-    bean.collectCount = collectCount;
-    bean.comment = comment;
-    bean.country = country;
-    bean.author = author;
-    bean.image = image;
-    bean.rating = rating;
+    bean.name = subject['name'];
+    bean.collectCount = subject['collect_count'];
+    bean.comment = subject['comment'];
+    bean.country = subject['country'];
+    bean.author = subject['author'];
+    bean.image = subject['image'];
+    bean.rating = subject['rating'];
+    bean.desc = subject['desc'];
+    bean.tag = subject['tag'];
 
     return bean;
   }

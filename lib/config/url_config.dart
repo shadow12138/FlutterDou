@@ -17,6 +17,9 @@ class MovieUrlConfig{
   static final getNew = movieHost + 'new_movies';
 
   static final getComingSoon = movieHost + 'coming_soon';
+
+  static final getRecommend = movieHost + 'recommends';
+
 }
 
 class TvUrlConfig{
@@ -39,6 +42,8 @@ class BookUrlConfig{
   static final getRanks = bookHost + 'ranks';
   
   static final getLists = bookHost + 'lists';
+
+  static final getRecommend = bookHost + 'recommends';
 }
 
 class NovelUrlConfig{
