@@ -15,14 +15,6 @@ class BookRecommendWidget extends StatefulWidget{
 class BookRecommendState extends State<BookRecommendWidget>{
   List<BookBean> books;
 
-  Widget _getTitle(){
-    return Container(
-      margin: EdgeInsets.only(bottom: 10),
-      alignment: Alignment.topLeft,
-      child: Text('为你推荐', style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),),
-    );
-  }
-
   Widget _getItem(BookBean bean, bool isLast){
     Widget _left = ImageUtils.getImageFromNetwork(bean.image, 80, 100, radius: 4);
 
@@ -69,19 +61,25 @@ class BookRecommendState extends State<BookRecommendWidget>{
       children.add(_getItem(books[i], i == books.length - 1));
     }
 
-    return Column(
-      children: children
+    return Container(
+      margin: EdgeInsets.only(top: 20),
+      child: Column(
+          children: children
+      ),
     );
   }
 
   @override
   Widget build(BuildContext context) {
+    Widget _title = ImageUtils.getTitle('为你推荐');
+    Widget _list = _getList();
+
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 14),
       margin: EdgeInsets.only(top: 40),
       child: Column(
         children: <Widget>[
-          _getTitle(), _getList()
+          _title, _list
         ],
       ),
     );

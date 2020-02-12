@@ -16,98 +16,55 @@ class HotFilmWidget extends StatefulWidget {
 
 class HotFilmState extends State<HotFilmWidget> {
   List<FilmBean> films;
-  double itemWidth = 104;
-
-  Widget _getTitle() {
-    return Container(
-      margin: EdgeInsets.only(bottom: 20, left: 14, right: 14),
-      child: Row(
-        children: <Widget>[
-          Expanded(
-            child: Text(
-              '豆瓣热门',
-              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 22),
-            ),
-          ),
-          Text('全部 500', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 12),),
-          Container(
-            margin: EdgeInsets.only(left: 2, top: 2),
-            child: Icon(Icons.arrow_forward_ios, size: 12,),
-          )
-        ],
-      ),
-    );
-  }
+  double itemWidth = 100;
 
   Widget _getItem(FilmBean bean) {
+    Widget _image = ImageUtils.getImageFromNetwork(bean.image, itemWidth, 140, radius: 4);
+    Widget _rating = ImageUtils.getRating(bean.rating, margin: EdgeInsets.only(top: 4));
+    Widget _name = Container(
+      margin: EdgeInsets.only(top: 4),
+      child: Text(bean.name, style: TextStyle(fontWeight: FontWeight.bold), maxLines: 1,),
+    );
+
     return Container(
-      margin: EdgeInsets.only(right: 6, bottom: 10),
       width: itemWidth,
-      alignment: Alignment.topLeft,
+      margin: EdgeInsets.only(left: 10),
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          ImageUtils.getImageFromNetwork(bean.image, itemWidth, 140,
-              radius: 4, alignment: Alignment.topLeft),
-          Container(
-            alignment: Alignment.topLeft,
-            margin: EdgeInsets.only(top: 4),
-            child: Text(
-              bean.name,
-              style:
-                  TextStyle(fontWeight: FontWeight.bold, color: Colors.black),
-              maxLines: 1,
-            ),
-          ),
-          Container(
-              alignment: Alignment.centerLeft,
-              margin: EdgeInsets.only(top: 4),
-              child: Row(
-                children: <Widget>[
-                  RatingBar.readOnly(
-                    size: 12,
-                    filledColor: Color.fromARGB(255, 240, 173, 70),
-                    emptyColor: Color.fromARGB(255, 202, 202, 202),
-                    initialRating: bean.rating / 2,
-                    isHalfAllowed: true,
-                    halfFilledIcon: Icons.star_half,
-                    filledIcon: Icons.star,
-                    emptyIcon: Icons.star,
-                  ),
-                  Container(
-                    margin: EdgeInsets.only(left: 2, top: 1),
-                    child: Text(
-                      '${bean.rating}',
-                      style: TextStyle(color: Colors.black45, fontSize: 10),
-                    ),
-                  )
-                ],
-              ))
+          _image,
+          _name,
+          _rating
         ],
       ),
     );
   }
 
   Widget _getList() {
-    if (films != null) {
-      return Container(
-        margin: EdgeInsets.only(left: 4),
-        child: Wrap(
-          children: films.map((item){
-            return _getItem(item);
-          }).toList(),
-          spacing: 3,
-        ),
-      );
-    }
-    return Container();
+    if (films == null)
+      return Container();
+    return Container(
+      margin: EdgeInsets.only(left: 4),
+      child: Wrap(
+        runSpacing: 14,
+        children: films.map((item){
+          return _getItem(item);
+        }).toList(),
+        spacing: 3,
+      ),
+    );
   }
 
   @override
   Widget build(BuildContext context) {
+    Widget _title = ImageUtils.getTitle('豆瓣热门', count: 500, margin: EdgeInsets.only(left: 14, right: 14, bottom: 20));
+    Widget _list = _getList();
+
     return Container(
       padding: EdgeInsets.only(top: 40),
       child: Column(
-        children: <Widget>[_getTitle(), _getList()],
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[_title, _list],
       ),
     );
   }

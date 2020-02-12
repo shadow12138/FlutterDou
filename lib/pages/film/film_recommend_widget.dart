@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app/config/url_config.dart';
-import 'package:flutter_app/model/file_bean.dart';
 import 'package:flutter_app/model/movie_bean.dart';
 import 'package:flutter_app/utils/http_utils.dart';
 import 'package:flutter_app/utils/image_utils.dart';
@@ -17,16 +16,6 @@ class FilmRecommendWidget extends StatefulWidget {
 class FilmRecommendState extends State<FilmRecommendWidget> {
   List<MovieBean> movies;
   double imageHeight = 120;
-
-  Widget _getTitle() {
-    return Container(
-      alignment: Alignment.topLeft,
-      child: Text(
-        '为你推荐',
-        style: TextStyle(fontWeight: FontWeight.bold, fontSize: 22),
-      ),
-    );
-  }
 
   Widget _getTag(String tag) {
     return Container(
@@ -78,7 +67,6 @@ class FilmRecommendState extends State<FilmRecommendWidget> {
         ],
       ),
     );
-
     Widget _title = Container(
       margin: EdgeInsets.only(top: 10),
       child: Row(
@@ -103,7 +91,6 @@ class FilmRecommendState extends State<FilmRecommendWidget> {
         style: TextStyle(color: ImageUtils.fromHex('#999999')),
       ),
     );
-
     Widget _tags = Container(
       margin: EdgeInsets.only(top: 10),
       child: Wrap(
@@ -134,11 +121,14 @@ class FilmRecommendState extends State<FilmRecommendWidget> {
 
   @override
   Widget build(BuildContext context) {
+    Widget _title = ImageUtils.getTitle('为你推荐');
+    Widget _list = _getList();
+
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 14),
-      margin: EdgeInsets.only(top: 30),
+      margin: EdgeInsets.only(top: 40),
       child: Column(
-        children: <Widget>[_getTitle(), _getList()],
+        children: <Widget>[_title, _list],
       ),
     );
   }

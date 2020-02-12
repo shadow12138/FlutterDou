@@ -8,6 +8,7 @@ import 'package:flutter_app/model/film_rank_bean.dart';
 import 'package:flutter_app/model/tv_bean.dart';
 import 'package:flutter_app/model/tv_rank_bean.dart';
 import 'package:flutter_app/utils/http_utils.dart';
+import 'package:flutter_app/utils/image_utils.dart';
 
 class TvRankWidget extends StatefulWidget {
   @override
@@ -17,39 +18,20 @@ class TvRankWidget extends StatefulWidget {
 }
 
 class TvRankState extends State<TvRankWidget> {
-  double headerHeight = 100;
-  double headerWidth = 220;
+  double itemHeight = 230;
+  double itemWidth = 220;
   double radius = 8;
   List<TvRankBean> ranks;
 
-  Widget _getTitle() {
-    return Container(
-      margin: EdgeInsets.only(bottom: 20, left: 14, right: 14, top: 20),
-      child: Row(
-        children: <Widget>[
-          Expanded(
-            child: Text(
-              '豆瓣榜单',
-              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 22),
-            ),
-          ),
-          Text('全部 9', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 12),),
-          Container(
-            margin: EdgeInsets.only(left: 2, top: 2),
-            child: Icon(Icons.arrow_forward_ios, size: 12,),
-          )
-        ],
-      ),
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
+    Widget _title = ImageUtils.getTitle('豆瓣榜单', count:  9, margin: EdgeInsets.symmetric(horizontal: 14));
+    Widget _list = _getList();
+
     return Container(
-      alignment: Alignment.topLeft,
-      padding: EdgeInsets.only(top: 10, bottom: 20),
+      margin: EdgeInsets.only(top: 40),
       child: Column(
-        children: <Widget>[_getTitle(), _getList()],
+        children: <Widget>[_title, _list,]
       ),
     );
   }
@@ -59,8 +41,8 @@ class TvRankState extends State<TvRankWidget> {
       return Container();
 
     return Container(
-        margin: EdgeInsets.only(left: 14),
-        height: 230,
+      margin: EdgeInsets.only(top: 20, left: 14),
+        height: itemHeight,
         child: ListView(
           scrollDirection: Axis.horizontal,
           children: ranks.map((item) {
@@ -70,34 +52,34 @@ class TvRankState extends State<TvRankWidget> {
   }
 
   Widget _getItem(TvRankBean bean) {
-    if (bean == null) return Container();
-
     List<Widget> children = [];
 
     List<TvBean> tvs = bean.tvList;
     for (int i = 0; i < tvs.length; i++) {
       TvBean tv = tvs[i];
+
+      Widget _name = Text(
+        '${i + 1}. ${tv.name} ',
+        style: TextStyle(color: Colors.white),
+      );
+      Widget _rating = Container(
+        margin: EdgeInsets.only(top: 2, left: 2),
+        child: Text(
+          '${tv.rating}',
+          style: TextStyle(color: Color.fromARGB(255, 193, 152, 91), fontSize: 12, fontWeight: FontWeight.bold),
+        ),
+      );
+
       children.add(Container(
         margin: EdgeInsets.only(bottom: 10, left: 10),
         child: Row(
-          children: <Widget>[
-            Text(
-              '${i + 1}. ${tv.name} ',
-              style: TextStyle(color: Colors.white),
-            ),
-            Container(
-              margin: EdgeInsets.only(top: 2, left: 2),
-              child: Text(
-                '${tv.rating}',
-                style: TextStyle(color: Color.fromARGB(255, 193, 152, 91), fontSize: 12, fontWeight: FontWeight.bold),
-              ),
-            )
-          ],
+          children: <Widget>[_name, _rating],
         ),
       ));
     }
 
-    Widget headerWidget = Stack(
+    double headerHeight = itemHeight * 0.4;
+    Widget _header = Stack(
       children: <Widget>[
         Container(
           height: headerHeight,
@@ -109,7 +91,7 @@ class TvRankState extends State<TvRankWidget> {
                   image: NetworkImage(bean.image), fit: BoxFit.cover)),
         ),
         Container(
-          width: headerWidth,
+          width: itemWidth,
           height: headerHeight,
           decoration: BoxDecoration(
               borderRadius: BorderRadius.only(
@@ -127,22 +109,23 @@ class TvRankState extends State<TvRankWidget> {
       ],
     );
 
+    Widget _content = Container(
+      margin: EdgeInsets.only(top: 14),
+      child: Column(
+        children: children,
+      ),
+    );
+
     return Container(
       margin: EdgeInsets.only(right: 10),
-      width: headerWidth,
+      width: itemWidth,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.all(Radius.circular(radius)),
         color: bean.mainColor,
       ),
       child: Column(
         children: <Widget>[
-          headerWidget,
-          Container(
-            margin: EdgeInsets.only(top: 14),
-            child: Column(
-              children: children,
-            ),
-          )
+          _header, _content
         ],
       ),
     );
@@ -152,7 +135,6 @@ class TvRankState extends State<TvRankWidget> {
   void initState() {
     super.initState();
 
-    //北美票房榜
     HttpUtils.getTvHttp(TvUrlConfig.getRanks).then((val) {
       setState(() {
         ranks = TvRankBean.getList(val);

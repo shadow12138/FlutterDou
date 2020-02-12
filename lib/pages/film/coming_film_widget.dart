@@ -16,7 +16,7 @@ class ComingFilmWidget extends StatefulWidget {
 
 class ComingFilmState extends State<ComingFilmWidget> {
   List<FilmBean> films;
-  double itemWidth = 104;
+  double itemWidth = 100;
 
   Widget _getTitle() {
     return Container(
@@ -48,68 +48,60 @@ class ComingFilmState extends State<ComingFilmWidget> {
   }
 
   Widget _getItem(FilmBean bean) {
+    Widget _image = ImageUtils.getImageFromNetwork(bean.image, itemWidth, 140, radius: 4, alignment: Alignment.topLeft);
+    Widget _name = Container(
+      margin: EdgeInsets.only(top: 4),
+      child: Text(
+        bean.name,
+        style:
+        TextStyle(fontWeight: FontWeight.bold, color: Colors.black),
+        maxLines: 1,
+      ),
+    );
+    Widget _collect = Container(
+        margin: EdgeInsets.only(top: 2),
+        child: Text('${bean.collectCount}人想看', style: TextStyle(color: Colors.black45, fontSize: 11),)
+    );
+    Widget _date = Container(
+      margin: EdgeInsets.only(top: 2),
+      padding: EdgeInsets.all(2),
+      decoration: BoxDecoration(borderRadius: BorderRadius.all(Radius.circular(2)), border: Border.all(color: Color.fromARGB(255, 209, 84, 100), width: 1)),
+      child: Text('${bean.pubDate}', style: TextStyle(color: Color.fromARGB(255, 209, 84, 100), fontWeight: FontWeight.bold, fontSize: 8),),
+    );
+
     return Container(
-      margin: EdgeInsets.only(right: 6, bottom: 10),
       width: itemWidth,
-      alignment: Alignment.topLeft,
+      margin: EdgeInsets.only(left: 10),
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          ImageUtils.getImageFromNetwork(bean.image, itemWidth, 140,
-              radius: 4, alignment: Alignment.topLeft),
-          Container(
-            alignment: Alignment.topLeft,
-            margin: EdgeInsets.only(top: 4),
-            child: Text(
-              bean.name,
-              style:
-                  TextStyle(fontWeight: FontWeight.bold, color: Colors.black),
-              maxLines: 1,
-            ),
-          ),
-          Container(
-              alignment: Alignment.centerLeft,
-              margin: EdgeInsets.only(top: 2),
-              child: Text('${bean.collectCount}人想看', style: TextStyle(color: Colors.black45, fontSize: 11),)
-          ),
-          Container(
-            alignment: Alignment.topLeft,
-            margin: EdgeInsets.only(top: 2),
-            child: Container(
-              alignment: Alignment.center,
-              width: 44,
-              height: 16,
-              padding: EdgeInsets.all(2),
-              decoration: BoxDecoration(borderRadius: BorderRadius.all(Radius.circular(2)), border: Border.all(color: Color.fromARGB(255, 209, 84, 100), width: 1)),
-              child: Text('${bean.pubDate}', style: TextStyle(color: Color.fromARGB(255, 209, 84, 100), fontWeight: FontWeight.bold, fontSize: 8),),
-
-            ),
-          )
-
+          _image, _name, _collect, _date
         ],
       ),
     );
   }
 
   Widget _getList() {
-    if (films != null) {
-      return Container(
-        margin: EdgeInsets.only(left: 4),
-        child: Wrap(
-          children: films.map((item){
-            return _getItem(item);
-          }).toList(),
-          spacing: 3,
-        ),
-      );
-    }
-    return Container();
+    if(films == null)
+      return Container();
+    return Container(
+      margin: EdgeInsets.only(left: 4),
+      child: Wrap(
+        runSpacing: 14,
+        children: films.map((item){
+          return _getItem(item);
+        }).toList(),
+        spacing: 3,
+      ),
+    );
   }
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.only(top: 20),
+      margin: EdgeInsets.only(top: 40),
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[_getTitle(), _getList()],
       ),
     );

@@ -1,4 +1,3 @@
-import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -6,6 +5,7 @@ import 'package:flutter_app/config/url_config.dart';
 import 'package:flutter_app/model/file_bean.dart';
 import 'package:flutter_app/model/film_rank_bean.dart';
 import 'package:flutter_app/utils/http_utils.dart';
+import 'package:flutter_app/utils/image_utils.dart';
 
 class FilmRankWidget extends StatefulWidget {
   @override
@@ -16,45 +16,27 @@ class FilmRankWidget extends StatefulWidget {
 
 class FilmRankState extends State<FilmRankWidget> {
   List<FilmRankBean> ranks = [null, null, null];
-  double headerHeight = 100;
-  double headerWidth = 220;
+  double itemHeight = 230;
+  double itemWidth = 220;
   double radius = 8;
-
-  Widget _getTitle() {
-    return Container(
-      margin: EdgeInsets.only(bottom: 20, left: 14, right: 14),
-      child: Row(
-        children: <Widget>[
-          Expanded(
-            child: Text(
-              '豆瓣榜单',
-              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 22),
-            ),
-          ),
-          Text('全部 10', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 12),),
-          Container(
-            margin: EdgeInsets.only(left: 2, top: 2),
-            child: Icon(Icons.arrow_forward_ios, size: 12,),
-          )
-        ],
-      ),
-    );
-  }
 
   @override
   Widget build(BuildContext context) {
+    Widget _title = ImageUtils.getTitle('豆瓣榜单', count: 10, margin: EdgeInsets.only(right: 14));
+    Widget _list = _getList();
+
     return Container(
-      alignment: Alignment.topLeft,
-      padding: EdgeInsets.only(top: 10, bottom: 20),
+      padding: EdgeInsets.only(left: 14),
+      margin: EdgeInsets.only(top: 40),
       child: Column(
-        children: <Widget>[_getTitle(), _getList()],
+        children: <Widget>[_title, _list],
       ),
     );
   }
 
   Widget _getList() {
     return Container(
-        margin: EdgeInsets.only(left: 14),
+        margin: EdgeInsets.only(top: 20),
         height: 230,
         child: ListView(
           scrollDirection: Axis.horizontal,
@@ -68,7 +50,6 @@ class FilmRankState extends State<FilmRankWidget> {
     if (bean == null) return Container();
 
     List<Widget> children = [];
-
     List<FilmBean> movies = bean.movies.sublist(0, 4);
     for (int i = 0; i < movies.length; i++) {
       FilmBean movie = movies[i];
@@ -91,8 +72,15 @@ class FilmRankState extends State<FilmRankWidget> {
         ),
       ));
     }
+    Widget _content = Container(
+      margin: EdgeInsets.only(top: 14),
+      child: Column(
+        children: children,
+      ),
+    );
 
-    Widget headerWidget = Stack(
+    double headerHeight = itemHeight * 0.4;
+    Widget _header = Stack(
       children: <Widget>[
         Container(
           height: headerHeight,
@@ -104,7 +92,7 @@ class FilmRankState extends State<FilmRankWidget> {
                   image: NetworkImage(bean.image), fit: BoxFit.cover)),
         ),
         Container(
-          width: headerWidth,
+          width: itemWidth,
           height: headerHeight,
           decoration: BoxDecoration(
               borderRadius: BorderRadius.only(
@@ -124,20 +112,14 @@ class FilmRankState extends State<FilmRankWidget> {
 
     return Container(
       margin: EdgeInsets.only(right: 10),
-      width: headerWidth,
+      width: itemWidth,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.all(Radius.circular(radius)),
         color: bean.mainColor,
       ),
       child: Column(
         children: <Widget>[
-          headerWidget,
-          Container(
-            margin: EdgeInsets.only(top: 14),
-            child: Column(
-              children: children,
-            ),
-          )
+          _header, _content
         ],
       ),
     );

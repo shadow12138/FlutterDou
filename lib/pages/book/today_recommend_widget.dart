@@ -15,93 +15,50 @@ class TodayRecommendWidget extends StatefulWidget {
 }
 
 class TodayRecommendState extends State<TodayRecommendWidget> {
-  Widget _getTitle() {
-    return Container(
-      margin: EdgeInsets.only(bottom: 20, left: 14, right: 14, top: 10),
-      child: Row(
+
+  Widget _getItem() {
+    String title = '普通人的正义，以及，我们为什么要记住？';
+    String desc = '在这个时间点阅读阿列克谢耶维奇《切诺贝利的祭祷》并不是多么愉快';
+    String author = '赫恩曼尼';
+
+    Widget _right = ImageUtils.getImageFromNetwork(
+        'https://img3.doubanio.com/view/subject/s/public/s29803758.jpg',
+        110,
+        110,
+        radius: 6,
+        margin: EdgeInsets.only(left: 10));
+
+    Widget _title = Container(child: Text(title, style: TextStyle(fontWeight: FontWeight.bold, fontSize: 17),),);
+    Widget _desc = Container(child: Text(desc, style: TextStyle(color: ImageUtils.getTextColor2(), fontSize: 14), maxLines: 2, overflow: TextOverflow.ellipsis,), margin: EdgeInsets.only(top: 6),);
+    Widget _author = Container(child: Text('作者：$author', style: TextStyle(color: ImageUtils.getTextColor3(), fontSize: 12), ), margin: EdgeInsets.only(top: 6),);
+
+    Widget _left = Expanded(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          Expanded(
-            child: Text(
-              '今日推荐',
-              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 22),
-            ),
-          ),
-          Text(
-            '全部 11',
-            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 12),
-          ),
-          Container(
-            margin: EdgeInsets.only(left: 2, top: 2),
-            child: Icon(
-              Icons.arrow_forward_ios,
-              size: 12,
-            ),
-          )
+          _title, _desc, _author
         ],
       ),
     );
-  }
 
-  Widget _getItem() {
     return Container(
-      width: SizeUtils.getScreenWidth(),
-      height: 120,
-      padding: EdgeInsets.symmetric(horizontal: 14),
+      margin: EdgeInsets.only(top: 20),
       child: Row(
-        children: <Widget>[
-          Expanded(
-            child: Column(
-              children: <Widget>[
-                Text(
-                  '普通人的正义，以及，我们为什么要记住',
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
-                ),
-                Container(
-                  margin: EdgeInsets.only(top: 4),
-                  child: Text(
-                    '在这个时间点阅读阿列克谢耶维奇《切诺贝利的祭祷》并不是多么愉快',
-                    maxLines: 2,
-                    overflow: TextOverflow.ellipsis,
-                    style: TextStyle(
-                        color: ImageUtils.fromHex('#7C7C7C'), fontSize: 13),
-                  ),
-                ),
-                Container(
-                  margin: EdgeInsets.only(top: 10),
-                  child: Row(
-                    children: <Widget>[
-                      Expanded(
-                          child: Text(
-                        '作者：赫恩曼尼',
-                        maxLines: 2,
-                        overflow: TextOverflow.ellipsis,
-                        style: TextStyle(
-                            color: ImageUtils.fromHex('#7C7C7C'), fontSize: 11),
-                      ))
-                    ],
-                  ),
-                )
-              ],
-            ),
-          ),
-          ImageUtils.getImageFromNetwork(
-              'https://img3.doubanio.com/view/subject/s/public/s29803758.jpg',
-              120,
-              130,
-              radius: 6,
-              margin: EdgeInsets.only(left: 10))
-        ],
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[_left, _right],
       ),
     );
   }
 
   @override
   Widget build(BuildContext context) {
+    Widget _title = ImageUtils.getTitle('今日推荐', count: 11);
+
     return Container(
-      alignment: Alignment.topLeft,
-      padding: EdgeInsets.only(top: 10, bottom: 20),
+      margin: EdgeInsets.only(top: 40),
+      padding: EdgeInsets.symmetric(horizontal: 14),
       child: Column(
-        children: <Widget>[_getTitle(), _getItem()],
+        children: <Widget>[_title, _getItem()],
       ),
     );
   }

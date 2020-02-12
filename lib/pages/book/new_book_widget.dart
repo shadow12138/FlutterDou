@@ -19,99 +19,54 @@ class NewBookWidget extends StatefulWidget {
 }
 
 class NewBookState extends State<NewBookWidget> {
-  double itemHeight = 130;
   double itemWidth = 330;
-
+  double itemHeight = 120;
   List<BookBean> books;
 
-  Widget _getTitle() {
-    return Container(
-      margin: EdgeInsets.only(bottom: 20, left: 14, right: 14, top: 20),
-      child: Row(
-        children: <Widget>[
-          Expanded(
-            child: Text(
-              '新书速递',
-              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 22),
-            ),
-          ),
-          Text(
-            '全部 49',
-            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 12),
-          ),
-          Container(
-            margin: EdgeInsets.only(left: 2, top: 2),
-            child: Icon(
-              Icons.arrow_forward_ios,
-              size: 12,
-            ),
-          )
-        ],
+  Widget _getItem(BookBean bean) {
+    Widget _left = ImageUtils.getImageFromNetwork(bean.image, 90, itemHeight, radius: 4, border: Border.all(color: ImageUtils.fromHex('#eeeeee'), width: 1));
+
+    Widget _name = Container(
+      child: Text(
+        bean.name,
+        style: TextStyle(color: Colors.black, fontSize: 18),
+      ),
+      alignment: Alignment.topLeft,
+    );
+    Widget _collect = Container(
+      margin: EdgeInsets.only(top: 4),
+      child: Text(
+        '${bean.collectCount} 人想看 / ${bean.author}',
+        style: TextStyle(
+            color: ImageUtils.getTextColor3(), fontSize: 12),
       ),
     );
-  }
+    Widget _comment = Container(
+      padding: EdgeInsets.all(10),
+      margin: EdgeInsets.only(top: 20),
+      decoration: BoxDecoration(borderRadius: BorderRadius.all(Radius.circular(4)), color: ImageUtils.getBackgroundColor()),
+      child: Text(bean.comment, style: TextStyle(color: ImageUtils.getTextColor1(), fontSize: 13)),
+    );
 
+    Widget _right = Expanded(
+      child: Container(
+        margin: EdgeInsets.only(left: 14),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            _name, _collect, _comment
+          ],
+        ),
+      ),
+    );
 
-  Widget _getItem(BookBean bean) {
     return Container(
       margin: EdgeInsets.only(right: 10),
       width: itemWidth,
       child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          Container(
-            height: itemHeight,
-            padding: EdgeInsets.only(bottom: itemHeight - 120),
-//            color: Colors.pink,
-            child: ImageUtils.getImageFromNetwork(bean.image, 90, 120,
-                radius: 4,
-                border:
-                Border.all(color: ImageUtils.fromHex('#eeeeee'), width: 1)),
-          ),
-          Expanded(
-            child: Container(
-              margin: EdgeInsets.only(left: 10),
-              alignment: Alignment.topLeft,
-              child: Column(
-                children: <Widget>[
-                  Container(
-                    child: Text(
-                      bean.name,
-                      style: TextStyle(color: Colors.black, fontSize: 18),
-                    ),
-                    alignment: Alignment.topLeft,
-                  ),
-                  Container(
-                    margin: EdgeInsets.only(top: 4, bottom: 20),
-                    child: Text(
-                      '${bean.collectCount} 人想看 / ${bean.author}',
-                      style: TextStyle(
-                          color: ImageUtils.fromHex('#929292'), fontSize: 12),
-                    ),
-                    alignment: Alignment.topLeft,
-                  ),
-                  Row(
-                    children: <Widget>[
-                      Expanded(
-                        child: Container(
-                          padding: EdgeInsets.symmetric(
-                              vertical: 10, horizontal: 10),
-                          decoration: BoxDecoration(
-                              color: ImageUtils.fromHex('#F7F7F7'),
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(4))),
-                          child: Text(
-                            bean.comment,
-                            style: TextStyle(color: Colors.black),
-                            maxLines: 2,
-                          ),
-                        ),
-                      )
-                    ],
-                  )
-                ],
-              ),
-            ),
-          )
+          _left, _right
         ],
       ),
     );
@@ -120,8 +75,8 @@ class NewBookState extends State<NewBookWidget> {
   Widget _getList() {
     if (books == null) return Container();
     return Container(
-      padding: EdgeInsets.only(left: 14),
-      height: itemHeight,
+      height: itemHeight + 20,
+      padding: EdgeInsets.only(top: 20, left: 14),
       child: ListView(
         scrollDirection: Axis.horizontal,
         children: books.map((item) {
@@ -133,10 +88,13 @@ class NewBookState extends State<NewBookWidget> {
 
   @override
   Widget build(BuildContext context) {
+    Widget _title = ImageUtils.getTitle('新书速递', count: 49, margin: EdgeInsets.symmetric(horizontal: 14));
+    Widget _list = _getList();
+
     return Container(
-      padding: EdgeInsets.only(top: 10, bottom: 20),
+      margin: EdgeInsets.only(top: 40),
       child: Column(
-        children: <Widget>[_getTitle(), _getList()],
+        children: <Widget>[_title, _list],
       ),
     );
   }

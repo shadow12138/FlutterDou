@@ -54,8 +54,35 @@ class ImageUtils {
     );
   }
 
+  static Widget getTitle(String title, {int count=0, EdgeInsets margin}){
+
+    List<Widget> children = [Expanded(
+      child: Text(
+        title,
+        style: TextStyle(fontWeight: FontWeight.bold, fontSize: 22),
+      ),
+    )];
+
+    if(count > 0){
+      Widget _r1 = Text('全部 $count', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 12),);
+      Widget _r2 = Container(
+        margin: EdgeInsets.only(left: 2, top: 2),
+        child: Icon(Icons.arrow_forward_ios, size: 12,),
+      );
+      children.addAll([_r1, _r2]);
+    }
+
+    return Container(
+      margin: margin,
+      child: Row(
+        children: children,
+      ),
+    );
+  }
+
   static Color getTextColor1() => fromHex('#333333');
   static Color getTextColor2() => fromHex('#666666');
   static Color getTextColor3() => fromHex('#999999');
   static Color getDividerColor() => fromHex('#E3E3E3');
+  static Color getBackgroundColor() => fromHex('#f7f7f7');
 }

@@ -70,7 +70,8 @@ class AdvertiseWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.symmetric(horizontal: 14, vertical: 20),
+      padding: EdgeInsets.symmetric(horizontal: 14),
+      margin: EdgeInsets.only(top: 40),
       child: ImageUtils.getImageFromNetwork(
           'https://img3.doubanio.com/view/dale-online/dale_ad/public/d32ab39912f2b40.jpg',
           SizeUtils.getScreenWidth(),

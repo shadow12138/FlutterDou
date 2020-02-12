@@ -17,57 +17,23 @@ class BookListWidget extends StatefulWidget {
 
 class BookListState extends State<BookListWidget> {
   List<BookListBean> bookLists;
-  double itemHeight = 90;
 
-  Widget _getTitle() {
-    return Container(
-      margin: EdgeInsets.only(bottom: 20, left: 14, right: 14, top: 20),
-      child: Row(
-        children: <Widget>[
-          Expanded(
-            child: Text(
-              '豆瓣书单',
-              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 22),
-            ),
-          ),
-          Text(
-            '全部 459',
-            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 12),
-          ),
-          Container(
-            margin: EdgeInsets.only(left: 2, top: 2),
-            child: Icon(
-              Icons.arrow_forward_ios,
-              size: 12,
-            ),
-          )
-        ],
-      ),
-    );
-  }
 
   Widget _getItem(BookListBean bean, bool isLast) {
-    Color borderColor = isLast ? Colors.transparent : Color.fromARGB(255, 230, 230, 230);
+    Color borderColor = isLast ? Colors.transparent : ImageUtils.getDividerColor();
     return Container(
-      padding: EdgeInsets.only(bottom: 14),
-      decoration: BoxDecoration(
-          border: Border(
-              bottom: BorderSide(
-                  color: borderColor, width: 0.5))),
-      margin: EdgeInsets.only(left: 14, right: 14, bottom: 16),
-      alignment: Alignment.topLeft,
+      decoration: BoxDecoration(border: Border(bottom: BorderSide(color: borderColor, width: 0.5))),
+      padding: EdgeInsets.symmetric(vertical: 20),
       child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          _getImage(bean),
-          Expanded(
-            child: _getDetail(bean),
-          )
+          _getLeft(bean), _getRight(bean)
         ],
       ),
     );
   }
   
-  Widget _getImage(BookListBean bean){
+  Widget _getLeft(BookListBean bean){
     double width = 60;
     double height = 80;
     return Container(
@@ -87,82 +53,29 @@ class BookListState extends State<BookListWidget> {
     );
   }
 
-  Widget _getLeft(BookListBean bean) {
-    return Column(
-      children: <Widget>[
-        Container(
-          alignment: Alignment.topLeft,
-          child: Row(
-            children: <Widget>[
-              Text(
-                bean.title,
-                style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-              ),
-            ],
-          ),
-        ),
-        Container(
-          margin: EdgeInsets.only(top: 4),
-          child: Row(
-            children: <Widget>[
-              Expanded(
-                child: Container(
-                  margin: EdgeInsets.only(left: 2, top: 1),
-                  child: Text(
-                    '${bean.count}本 · ${bean.collectCount}人关注',
-                    style: TextStyle(fontSize: 10, color: Colors.black54),
-                  ),
-                ),
-              )
-            ],
-          ),
-        ),
-        Container(
-          margin: EdgeInsets.only(top: 14),
-          child: Row(
-            children: <Widget>[
-              ImageUtils.getImageFromNetwork(bean.avatar, 14, 14, radius: 100),
-              Container(
-                margin: EdgeInsets.only(left: 4),
-                child: Text(
-                  bean.author,
-                  style: TextStyle(
-                      fontSize: 12, color: ImageUtils.fromHex('#818181')),
-                ),
-              ),
-              Container(
-                margin: EdgeInsets.only(left: 2),
-                child: Text(
-                  '创建',
-                  style: TextStyle(
-                      color: ImageUtils.fromHex('#C5C5C5'), fontSize: 12),
-                ),
-              )
-            ],
-          ),
-        )
-      ],
-    );
-  }
-
-  Widget _getDetail(BookListBean bean) {
-    return Container(
-      height: itemHeight,
-      margin: EdgeInsets.only(left: 12),
-      alignment: Alignment.topLeft,
-      child: Column(
+  Widget _getRight(BookListBean bean){
+    Widget _name = Container(child: Text(bean.title, style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),),);
+    Widget _collect = Container(child: Text('${bean.count}本 · ${bean.collectCount}人关注', style: TextStyle(color: ImageUtils.getTextColor2(), fontSize: 12),), margin: EdgeInsets.only(top: 8),);
+    Widget _author = Container(
+      margin: EdgeInsets.only(top: 14),
+      child: Row(
         children: <Widget>[
-          Row(
-            children: <Widget>[
-              Expanded(
-                child: _getLeft(bean),
-              )
-            ],
-          )
+          ImageUtils.getImageFromNetwork(bean.avatar, 15, 15, radius: 100),
+          Text(' ${bean.author}', style: TextStyle(fontSize: 12, color: ImageUtils.getTextColor2()),),
+          Text(' 创建', style: TextStyle(fontSize: 12, color: ImageUtils.getTextColor3()),)
         ],
       ),
     );
+
+    return Container(
+      margin: EdgeInsets.only(left: 14),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[_name, _collect, _author],
+      ),
+    );
   }
+
 
   Widget _getList() {
     if (bookLists == null) return Container();
@@ -182,9 +95,14 @@ class BookListState extends State<BookListWidget> {
 
   @override
   Widget build(BuildContext context) {
+    Widget _title = ImageUtils.getTitle('豆瓣书单', count: 459);
+    Widget _list = _getList();
+
     return Container(
+      padding: EdgeInsets.symmetric(horizontal: 14),
+      margin: EdgeInsets.only(top: 40),
       child: Column(
-        children: <Widget>[_getTitle(), _getList()],
+        children: <Widget>[_title, _list],
       ),
     );
   }
