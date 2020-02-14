@@ -4,6 +4,7 @@ class FilmBean {
   double rating;
   int collectCount;
   String pubDate;
+  String id;
 
   FilmBean({this.image, this.name, this.rating});
 
@@ -23,6 +24,7 @@ class FilmBean {
       pubDate = date[1] + '月' + date[2] + '日';
     }
     bean.pubDate = pubDate;
+    bean.id = subject['id'];
 
     return bean;
   }

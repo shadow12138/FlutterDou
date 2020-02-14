@@ -1,4 +1,4 @@
-import 'package:flutter_app/model/music_bean.dart';
+import 'package:flutter_app/model/music/music_bean.dart';
 
 class MusicRankBean{
   String title;

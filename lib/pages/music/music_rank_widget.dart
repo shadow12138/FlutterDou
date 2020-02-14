@@ -1,8 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app/config/url_config.dart';
-import 'package:flutter_app/model/music_bean.dart';
-import 'package:flutter_app/model/music_rank_bean.dart';
+import 'package:flutter_app/model/music/music_bean.dart';
+import 'package:flutter_app/model/music/music_rank_bean.dart';
 import 'package:flutter_app/utils/http_utils.dart';
 import 'package:flutter_app/utils/image_utils.dart';
 

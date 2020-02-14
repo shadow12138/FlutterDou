@@ -20,6 +20,8 @@ class MovieUrlConfig{
 
   static final getRecommend = movieHost + 'recommends';
 
+  static final getDetail = movieHost + 'detail';
+
 }
 
 class TvUrlConfig{

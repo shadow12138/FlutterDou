@@ -1,4 +1,4 @@
-import 'package:flutter_app/model/tv_bean.dart';
+import 'package:flutter_app/model/tv/tv_bean.dart';
 
 class SeriesBean{
   String title;

@@ -1,15 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_app/config/url_config.dart';
-import 'package:flutter_app/model/file_bean.dart';
-import 'package:flutter_app/model/hot_tv_series_bean.dart';
-import 'package:flutter_app/model/novel_bean.dart';
-import 'package:flutter_app/model/novel_series_bean.dart';
-import 'package:flutter_app/model/tv_bean.dart';
+import 'package:flutter_app/model/novel/novel_bean.dart';
+import 'package:flutter_app/model/novel/novel_series_bean.dart';
 import 'package:flutter_app/utils/http_utils.dart';
 import 'package:flutter_app/utils/image_utils.dart';
 import 'package:flutter_app/utils/size_utils.dart';
-import 'package:rating_bar/rating_bar.dart';
 
 class HotNovelWidget extends StatefulWidget {
   @override

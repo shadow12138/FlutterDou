@@ -1,31 +1,24 @@
-import 'dart:ui';
+import 'package:flutter_app/model/novel/novel_bean.dart';
 
-import 'package:flutter_app/model/novel_bean.dart';
-import 'package:flutter_app/utils/image_utils.dart';
-
-class NovelRankBean{
+class NovelSeriesBean{
   String title;
-  Color mainColor;
-  String image;
+  int count;
   List<NovelBean> novelList;
 
   static getItem(Map<String, dynamic> subject){
     String title = subject['title'];
-    String image = subject['image'];
-    String color = subject['color'];
+    int count = subject['count'];
     List<NovelBean> novelList = NovelBean.getList(subject['subjects']);
 
-    NovelRankBean bean = NovelRankBean();
+    NovelSeriesBean bean = NovelSeriesBean();
     bean.title = title;
-    bean.image = image;
-    bean.mainColor = ImageUtils.fromHex(color);
     bean.novelList = novelList;
-
+    bean.count = count;
     return bean;
   }
 
   static getList(List<dynamic> subjects){
-    List<NovelRankBean> beans = [];
+    List<NovelSeriesBean> beans = [];
     for(Map<String, dynamic> subject in subjects){
       beans.add(getItem(subject));
     }

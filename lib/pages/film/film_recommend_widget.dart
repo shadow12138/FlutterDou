@@ -1,7 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app/config/url_config.dart';
-import 'package:flutter_app/model/movie_bean.dart';
+import 'package:flutter_app/model/movie/movie_bean.dart';
+import 'package:flutter_app/route/utils.dart';
 import 'package:flutter_app/utils/http_utils.dart';
 import 'package:flutter_app/utils/image_utils.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
@@ -35,7 +36,7 @@ class FilmRecommendState extends State<FilmRecommendWidget> {
     );
   }
 
-  Widget _getItem(MovieBean bean) {
+  Widget _getItem(BuildContext context, MovieBean bean) {
     Widget _images = Container(
       child: Row(
         children: <Widget>[
@@ -101,20 +102,26 @@ class FilmRecommendState extends State<FilmRecommendWidget> {
       ),
     );
 
-    return Container(
-      margin: EdgeInsets.only(top: 20, bottom: 10),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[_images, _title, _rating, _comment, _tags],
+    return InkWell(
+      onTap: (){
+        print(bean.id);
+        RouterUtils.navigateToMovieDetail(context, bean.id);
+      },
+      child: Container(
+        margin: EdgeInsets.only(top: 20, bottom: 10),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[_images, _title, _rating, _comment, _tags],
+        ),
       ),
     );
   }
 
-  Widget _getList() {
+  Widget _getList(BuildContext context) {
     if (movies == null) return Container();
     return Column(
       children: movies.map((item){
-        return _getItem(item);
+        return _getItem(context, item);
       }).toList(),
     );
   }
@@ -122,7 +129,7 @@ class FilmRecommendState extends State<FilmRecommendWidget> {
   @override
   Widget build(BuildContext context) {
     Widget _title = ImageUtils.getTitle('为你推荐');
-    Widget _list = _getList();
+    Widget _list = _getList(context);
 
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 14),

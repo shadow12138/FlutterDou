@@ -30,6 +30,9 @@ dependencies:
   rating_bar: ^0.2.0
   sticky_headers: ^0.1.8
   provider: ^4.0.3
+  palette_generator: ^0.2.0
+  quantize_dart: ^1.0.3
+  fluro: ^1.5.2
 
 dev_dependencies:
   flutter_test:

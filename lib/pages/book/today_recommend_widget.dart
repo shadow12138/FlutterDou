@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_app/config/url_config.dart';
-import 'package:flutter_app/model/book_bean.dart';
-import 'package:flutter_app/model/book_rank_bean.dart';
+import 'package:flutter_app/model/book/book_bean.dart';
+import 'package:flutter_app/model/book/book_rank_bean.dart';
 import 'package:flutter_app/utils/http_utils.dart';
 import 'package:flutter_app/utils/image_utils.dart';
 import 'package:flutter_app/utils/size_utils.dart';

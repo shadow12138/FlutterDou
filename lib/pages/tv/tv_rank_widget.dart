@@ -3,10 +3,8 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_app/config/url_config.dart';
-import 'package:flutter_app/model/file_bean.dart';
-import 'package:flutter_app/model/film_rank_bean.dart';
-import 'package:flutter_app/model/tv_bean.dart';
-import 'package:flutter_app/model/tv_rank_bean.dart';
+import 'package:flutter_app/model/tv/tv_bean.dart';
+import 'package:flutter_app/model/tv/tv_rank_bean.dart';
 import 'package:flutter_app/utils/http_utils.dart';
 import 'package:flutter_app/utils/image_utils.dart';
 

@@ -1,30 +1,32 @@
 import 'dart:ui';
 
-import 'package:flutter_app/model/tv_bean.dart';
+import 'package:flutter_app/model/tv/tv_bean.dart';
 import 'package:flutter_app/utils/image_utils.dart';
 
-class TvRankBean{
+import 'book_bean.dart';
+
+class BookRankBean{
   String title;
-  List<TvBean> tvList;
+  List<BookBean> bookList;
   String image;
   Color mainColor;
 
-  static TvRankBean getItem(Map<String, dynamic> subject){
+  static BookRankBean getItem(Map<String, dynamic> subject){
     String title = subject['title'];
     String color = subject['color'];
     String image = subject['image'];
-    List<TvBean> tvList = TvBean.getList(subject['subjects']);
+    List<BookBean> bookList = BookBean.getList(subject['subjects']);
 
-    TvRankBean bean = TvRankBean();
+    BookRankBean bean = BookRankBean();
     bean.title = title;
-    bean.tvList = tvList;
+    bean.bookList = bookList;
     bean.image = image;
     bean.mainColor = ImageUtils.fromHex(color);
     return bean;
   }
 
-  static List<TvRankBean> getList(List<dynamic> subjects){
-    List<TvRankBean> items = [];
+  static List<BookRankBean> getList(List<dynamic> subjects){
+    List<BookRankBean> items = [];
     for(Map<String, dynamic> subject in subjects){
       items.add(getItem(subject));
     }
@@ -33,6 +35,6 @@ class TvRankBean{
 
   @override
   String toString() {
-    return this.tvList.toString();
+    return this.bookList.toString();
   }
 }

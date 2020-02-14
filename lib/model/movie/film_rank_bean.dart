@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_app/model/file_bean.dart';
+import 'file_bean.dart';
 
 class FilmRankBean{
 

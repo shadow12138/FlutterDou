@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_app/config/url_config.dart';
-import 'package:flutter_app/model/novel_bean.dart';
+import 'package:flutter_app/model/novel/novel_bean.dart';
 import 'package:flutter_app/utils/http_utils.dart';
 import 'package:flutter_app/utils/image_utils.dart';
 import 'package:flutter_app/utils/size_utils.dart';

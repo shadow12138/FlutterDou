@@ -2,10 +2,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_app/config/url_config.dart';
-import 'package:flutter_app/model/file_bean.dart';
+import 'package:flutter_app/model/movie/file_bean.dart';
+import 'package:flutter_app/route/utils.dart';
 import 'package:flutter_app/utils/http_utils.dart';
 import 'package:flutter_app/utils/image_utils.dart';
-import 'package:rating_bar/rating_bar.dart';
 
 class ComingFilmWidget extends StatefulWidget {
   @override
@@ -47,7 +47,7 @@ class ComingFilmState extends State<ComingFilmWidget> {
     );
   }
 
-  Widget _getItem(FilmBean bean) {
+  Widget _getItem(BuildContext context, FilmBean bean) {
     Widget _image = ImageUtils.getImageFromNetwork(bean.image, itemWidth, 140, radius: 4, alignment: Alignment.topLeft);
     Widget _name = Container(
       margin: EdgeInsets.only(top: 4),
@@ -69,19 +69,24 @@ class ComingFilmState extends State<ComingFilmWidget> {
       child: Text('${bean.pubDate}', style: TextStyle(color: Color.fromARGB(255, 209, 84, 100), fontWeight: FontWeight.bold, fontSize: 8),),
     );
 
-    return Container(
-      width: itemWidth,
-      margin: EdgeInsets.only(left: 10),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          _image, _name, _collect, _date
-        ],
+    return InkWell(
+      onTap: (){
+        RouterUtils.navigateToMovieDetail(context, bean.id);
+      },
+      child: Container(
+        width: itemWidth,
+        margin: EdgeInsets.only(left: 10),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            _image, _name, _collect, _date
+          ],
+        ),
       ),
     );
   }
 
-  Widget _getList() {
+  Widget _getList(BuildContext context) {
     if(films == null)
       return Container();
     return Container(
@@ -89,7 +94,7 @@ class ComingFilmState extends State<ComingFilmWidget> {
       child: Wrap(
         runSpacing: 14,
         children: films.map((item){
-          return _getItem(item);
+          return _getItem(context, item);
         }).toList(),
         spacing: 3,
       ),
@@ -102,7 +107,7 @@ class ComingFilmState extends State<ComingFilmWidget> {
       margin: EdgeInsets.only(top: 40),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[_getTitle(), _getList()],
+        children: <Widget>[_getTitle(), _getList(context)],
       ),
     );
   }
